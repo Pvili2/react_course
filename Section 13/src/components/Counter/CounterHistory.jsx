@@ -10,7 +10,6 @@ function HistoryItem({ count }) {
   function handleClick() {
     setSelected((prevSelected) => !prevSelected);
   }
-
   return (
     <li onClick={handleClick} className={selected ? 'selected' : undefined}>
       {count}
@@ -23,8 +22,8 @@ export default function CounterHistory({ history }) {
 
   return (
     <ol>
-      {history.map((count, index) => (
-        <HistoryItem key={index} count={count} />
+      {history.map(({ value, id }) => (
+        <HistoryItem key={id} count={value} />
       ))}
     </ol>
   );
