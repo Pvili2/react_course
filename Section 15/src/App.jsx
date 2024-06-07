@@ -7,27 +7,14 @@ import logoImg from './assets/logo.png';
 import AvailablePlaces from './components/AvailablePlaces.jsx';
 import { UpdateUserPlaces, FetchUserPlaces } from './htttp.js';
 import Error from './components/Error.jsx';
-
+import { useFetch } from './hooks/useFetch.js';
 function App() {
   const selectedPlace = useRef();
 
-  const [userPlaces, setUserPlaces] = useState([]);
-  const [errors, setErrors] = useState();
+
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  useEffect(() => {
-    async function FetchPlaces() {
-      try {
-        const places = await FetchUserPlaces();
-        setUserPlaces(places);
-      } catch (error) {
-        setUserPlaces(selectedPlace)
-        setErrors(error);
-      }
-    }
-
-    FetchPlaces();
-  }, [])
+  const { fetchedData: userPlaces, error: errors, setFetchedData: setUserPlaces, setErrors } = useFetch(FetchUserPlaces, []);
   function handleStartRemovePlace(place) {
     setModalIsOpen(true);
     selectedPlace.current = place;
